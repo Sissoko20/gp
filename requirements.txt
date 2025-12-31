@@ -1,7 +1,8 @@
 streamlit
-reportlab
 pandas
-python-docx
-fpdf
-Pillow
 matplotlib
+reportlab
+fpdf
+python-docx
+Pillow
+xhtml2pdf
