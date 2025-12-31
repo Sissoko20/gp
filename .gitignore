@@ -1,0 +1,4 @@
+echo "serviceAccountKey.json" >> .gitignore
+git rm --cached serviceAccountKey.json
+git commit -m "Remove service account key from repo"
+git push origin main
