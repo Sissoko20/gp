@@ -5,4 +5,3 @@ python-docx
 fpdf
 Pillow
 matplotlib
-sqlite3
