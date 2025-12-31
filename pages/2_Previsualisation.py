@@ -3,6 +3,32 @@ import sqlite3
 from datetime import datetime
 from components.pdf_generator import generate_pdf, build_facture_html
 
+
+from components.sidebar import sidebar_navigation
+
+
+# Appel du menu global
+theme = sidebar_navigation()
+
+# Appliquer le thème choisi
+if theme == "Clair":
+    st.markdown("""
+        <style>
+        body { background-color: #ffffff; color: #000000; }
+        [data-testid="stSidebar"] { background-color: #f8f9fa; }
+        </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+        <style>
+        body { background-color: #1e1e1e; color: #ffffff; }
+        [data-testid="stSidebar"] { background-color: #2c2c2c; }
+        </style>
+    """, unsafe_allow_html=True)
+
+
+
+
 # Connexion et initialisation DB
 conn = sqlite3.connect("data/factures.db")
 cursor = conn.cursor()
@@ -32,11 +58,9 @@ if modele == "Facture Professionnelle":
 
     st.markdown("### 🧾 Lignes de facture")
 
-    # Initialiser la liste des lignes dans session_state
     if "facture_items" not in st.session_state:
         st.session_state.facture_items = []
 
-    # Bouton pour ajouter une ligne
     if st.button("➕ Ajouter une ligne"):
         st.session_state.facture_items.append({
             "description": "",
@@ -55,7 +79,6 @@ if modele == "Facture Professionnelle":
         price = st.number_input(f"Prix unitaire {i+1} (FCFA)", min_value=0.0, value=item["price"], key=f"price_{i}")
         tva = st.checkbox(f"Appliquer TVA 18% à la ligne {i+1}", value=True, key=f"tva_{i}")
 
-        # Bouton pour supprimer la ligne
         if st.button(f"🗑️ Supprimer la ligne {i+1}"):
             st.session_state.facture_items.pop(i)
             st.experimental_rerun()
@@ -75,7 +98,7 @@ if modele == "Facture Professionnelle":
         "items": items
     }
 
-    html_preview = build_facture_html(data, type_doc="Facture")
+    html_preview = build_facture_html(data, type_doc="Facture Professionnelle")
     montant = sum(item["qty"] * item["price"] for item in items)
 
 # -------------------------------
@@ -83,16 +106,19 @@ if modele == "Facture Professionnelle":
 # -------------------------------
 else:
     client_name = st.text_input("Nom du client")
+    client_phone = st.text_input("Téléphone du client")
+    client_email = st.text_input("Email du client")
     amount = st.number_input("Montant payé (FCFA)", min_value=0, value=0)
     objet = st.text_input("Objet du paiement", "Paiement de services médicaux")
 
     data = {
         "client_name": client_name,
+        "client_phone": client_phone,
+        "client_email": client_email,
         "amount": amount,
-        "objet": objet,
-        "footer": "Nous vous servons la qualité !"
+        "objet": objet
     }
-    html_preview = build_facture_html(data, type_doc="Reçu")
+    html_preview = build_facture_html(data, type_doc="Reçu de Paiement")
     montant = amount
 
 # -------------------------------
