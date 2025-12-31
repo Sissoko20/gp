@@ -1,5 +1,5 @@
 # Core Streamlit app
-streamlit>=1.40.0
+streamlit>=1.31
 
 # Data manipulation & visualisation
 pandas>=2.2.3
@@ -13,7 +13,7 @@ Pillow>=11.0.0
 xhtml2pdf>=0.2.15
 
 # Firebase Admin SDK (gestion des rôles, Firestore, etc.)
-firebase-admin>=6.5.0
+firebase-admin>=6.0.0
 
 # Pyrebase (auth côté client)
 pyrebase4>=4.7.1
@@ -25,7 +25,7 @@ pycryptodomex>=3.20.0
 # Google Cloud clients (Firestore, Storage)
 google-auth>=2.35.0
 google-auth-oauthlib>=1.2.0
-google-cloud-firestore>=2.16.0
+google-cloud-firestore>=2.13.0
 google-cloud-storage>=2.18.0
 
 # Utilitaires
