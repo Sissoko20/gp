@@ -1,0 +1,7 @@
+streamlit
+reportlab
+pandas
+python-docx
+fpdf
+Pillow
+matplotlib
